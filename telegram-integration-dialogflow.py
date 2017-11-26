@@ -31,6 +31,12 @@ def inline(bot, update):
     )
     bot.answer_inline_query(update.inline_query.id, reply)
 
+def voice(bot, update):
+    # TODO: Add a reply message
+    chat_id = update.message.chat_id
+    bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
+    bot.send_message(chat_id=chat_id, text="Pong")
+
 logging.info('Program started')
 
 bot = telegram.Bot(TELEGRAM_TOKEN)
@@ -48,6 +54,9 @@ dispatcher.add_handler(text_handler)
 
 inline_handler = InlineQueryHandler(inline)
 dispatcher.add_handler(inline_handler)
+
+voice_handler = MessageHandler(Filters.voice, voice)
+dispatcher.add_handler(voice_handler)
 
 updater.start_polling()
 updater.idle()
