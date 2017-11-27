@@ -40,19 +40,20 @@ def voice(bot, update):
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=chat_id, text="Pong")
 
-def dialogflow_event_request(event, session_id):
-    request = dialogflow.event_request(apiai.events.Event(event))
+def dialogflow_request(request, session_id):
     request.session_id = session_id
-    response = json.loads(request.getresponse().read())
-    return response['result']['fulfillment']['speech']
-
-def dialogflow_text_request(query, session_id):
-    request = dialogflow.text_request()
-    request.session_id = session_id
-    request.query = query
     response = request.getresponse().read().decode()
     response_json = json.loads(response, strict=False)
     return response_json['result']['fulfillment']['messages'][0]['speech']
+
+def dialogflow_event_request(event, session_id):
+    request = dialogflow.event_request(apiai.events.Event(event))
+    return dialogflow_request(request, session_id)
+
+def dialogflow_text_request(query, session_id):
+    request = dialogflow.text_request()
+    request.query = query
+    return dialogflow_request(request, session_id)
 
 logging.info('Program started')
 
