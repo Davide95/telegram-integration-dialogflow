@@ -23,14 +23,13 @@ def inline(bot, update):
     query = update.inline_query.query
     if not query:
         return
-    # TODO: find the Chat ID
-    session_id = str(uuid.uuid1())
+    session_id = update.inline_query.from_user.id
     dialogflow_reply = dialogflow_text_request(query, session_id)
     reply = list()
     reply.append(
         InlineQueryResultArticle(
-            id = str(uuid.uuid1()),
-            title = query,
+            id = uuid.uuid4(),
+            title = query.capitalize(),
             input_message_content = InputTextMessageContent(dialogflow_reply)
         )
     )
