@@ -10,12 +10,13 @@ def start(bot, update):
     # TODO: add a /start message
     chat_id = update.message.chat_id
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=chat_id, text="I'm a bot, please talk to me!")
+    reply = dialogflow_event_request('TELEGRAM_WELCOME', chat_id)
+    bot.send_message(chat_id=chat_id, text=reply)
 
 def text(bot, update):
     chat_id = update.message.chat_id
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-    reply = dialogflow_request(update.message.text, chat_id)
+    reply = dialogflow_text_request(update.message.text, chat_id)
     bot.send_message(chat_id=chat_id, text=reply)
 
 def inline(bot, update):
@@ -39,12 +40,19 @@ def voice(bot, update):
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=chat_id, text="Pong")
 
-def dialogflow_request(query, session_id):
+def dialogflow_event_request(event, session_id):
+    request = dialogflow.event_request(apiai.events.Event(event))
+    request.session_id = session_id
+    response = json.loads(request.getresponse().read())
+    return response['result']['fulfillment']['speech']
+
+def dialogflow_text_request(query, session_id):
     request = dialogflow.text_request()
     request.session_id = session_id
     request.query = query
-    response = json.loads(request.getresponse().read())
-    return response['result']['fulfillment']['speech']
+    response = request.getresponse().read().decode()
+    response_json = json.loads(response, strict=False)
+    return response_json['result']['fulfillment']['messages'][0]['speech']
 
 logging.info('Program started')
 
