@@ -5,6 +5,7 @@ from telegram.ext import Updater, CommandHandler, Filters, MessageHandler, Inlin
 from telegram import InlineQueryResultArticle, InputTextMessageContent
 import apiai
 import json
+import uuid
 
 def start(bot, update):
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
@@ -22,13 +23,15 @@ def inline(bot, update):
     query = update.inline_query.query
     if not query:
         return
-    reply = dialogflow_text_request(query, )
+    # TODO: find the Chat ID
+    session_id = str(uuid.uuid1())
+    dialogflow_reply = dialogflow_text_request(query, session_id)
     reply = list()
     reply.append(
         InlineQueryResultArticle(
-            id='id1',
-            title=query,
-            input_message_content=InputTextMessageContent('text')
+            id = str(uuid.uuid1()),
+            title = query,
+            input_message_content = InputTextMessageContent(dialogflow_reply)
         )
     )
     bot.answer_inline_query(update.inline_query.id, reply)
