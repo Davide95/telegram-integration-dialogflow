@@ -4,3 +4,5 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s.', level=lo
 
 TELEGRAM_TOKEN = '';
 ADMIN_CHAT_ID = ''
+
+DIALOGFLOW_TOKEN = ''

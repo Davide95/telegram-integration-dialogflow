@@ -1,8 +1,10 @@
 import logging
-from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID
+from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_TOKEN
 import telegram
 from telegram.ext import Updater, CommandHandler, Filters, MessageHandler, InlineQueryHandler
 from telegram import InlineQueryResultArticle, InputTextMessageContent
+import apiai
+import json
 
 def start(bot, update):
     # TODO: add a /start message
@@ -11,10 +13,10 @@ def start(bot, update):
     bot.send_message(chat_id=chat_id, text="I'm a bot, please talk to me!")
 
 def text(bot, update):
-    # TODO: Add a reply message
     chat_id = update.message.chat_id
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=chat_id, text="Pong")
+    reply = dialogflow_request(update.message.text, chat_id)
+    bot.send_message(chat_id=chat_id, text=reply)
 
 def inline(bot, update):
     # TODO: Add a reply message
@@ -24,9 +26,9 @@ def inline(bot, update):
     reply = list()
     reply.append(
         InlineQueryResultArticle(
-            id=query.upper(),
-            title=query.upper(),
-            input_message_content=InputTextMessageContent(query.upper())
+            id='id1',
+            title='title',
+            input_message_content=InputTextMessageContent('text')
         )
     )
     bot.answer_inline_query(update.inline_query.id, reply)
@@ -37,27 +39,36 @@ def voice(bot, update):
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=chat_id, text="Pong")
 
+def dialogflow_request(query, session_id):
+    request = dialogflow.text_request()
+    request.session_id = session_id
+    request.query = query
+    response = json.loads(request.getresponse().read())
+    return response['result']['fulfillment']['speech']
+
 logging.info('Program started')
 
+# Init dialogflow
+dialogflow = apiai.ApiAI(DIALOGFLOW_TOKEN)
+
+# Init telegram
 bot = telegram.Bot(TELEGRAM_TOKEN)
 updater = Updater(token=TELEGRAM_TOKEN)
 dispatcher = updater.dispatcher
-
 bot.sendMessage(ADMIN_CHAT_ID, text='Bot started.');
 logging.info('Bot started')
 
+# Add telegram handlers
 start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
-
 text_handler = MessageHandler(Filters.text, text)
 dispatcher.add_handler(text_handler)
-
 inline_handler = InlineQueryHandler(inline)
 dispatcher.add_handler(inline_handler)
-
 voice_handler = MessageHandler(Filters.voice, voice)
 dispatcher.add_handler(voice_handler)
 
+# Start polling and wait on idle state
 updater.start_polling()
 updater.idle()
 bot.sendMessage(ADMIN_CHAT_ID, text='Program aborted.');
