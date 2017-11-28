@@ -6,6 +6,8 @@ from telegram import InlineQueryResultArticle, InputTextMessageContent
 import apiai
 import json
 import uuid
+import tempfile
+import os
 
 def start(bot, update):
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
@@ -39,7 +41,13 @@ def voice(bot, update):
     # TODO: Add a reply message
     chat_id = update.message.chat_id
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=chat_id, text="Pong")
+    file_id = update.message.voice.file_id
+    newFile = bot.get_file(file_id)
+    temp_name = os.path.join(tempfile._get_default_tempdir(), next(tempfile._get_candidate_names()))
+    newFile.download(temp_name)
+    logging.debug(file_id + ' downloaded to ' + temp_name)
+    bot.send_voice(chat_id=chat_id, voice=open(temp_name, 'rb'))
+    os.remove(temp_name)
 
 def dialogflow_request(request, session_id):
     request.session_id = session_id
