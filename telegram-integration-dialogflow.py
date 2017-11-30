@@ -38,18 +38,6 @@ def inline(bot, update):
     )
     bot.answer_inline_query(update.inline_query.id, reply)
 
-def voice(bot, update):
-    # TODO: Add a reply message
-    chat_id = update.message.chat_id
-    bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-    file_id = update.message.voice.file_id
-    newFile = bot.get_file(file_id)
-    temp_name = os.path.join(tempfile._get_default_tempdir(), next(tempfile._get_candidate_names()))
-    newFile.download(temp_name)
-    logging.debug(file_id + ' downloaded to ' + temp_name)
-    bot.send_voice(chat_id=chat_id, voice=open(temp_name, 'rb'))
-    os.remove(temp_name)
-
 def dialogflow_request(request, session_id):
     request.session_id = session_id
     response = request.getresponse().read().decode()
@@ -85,8 +73,6 @@ text_handler = MessageHandler(Filters.text, text)
 dispatcher.add_handler(text_handler)
 inline_handler = InlineQueryHandler(inline)
 dispatcher.add_handler(inline_handler)
-voice_handler = MessageHandler(Filters.voice, voice)
-dispatcher.add_handler(voice_handler)
 
 # Start polling and wait on idle state
 updater.start_polling()
