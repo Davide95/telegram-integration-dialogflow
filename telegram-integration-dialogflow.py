@@ -74,8 +74,9 @@ dialogflow = apiai.ApiAI(DIALOGFLOW_TOKEN)
 bot = telegram.Bot(TELEGRAM_TOKEN)
 updater = Updater(token=TELEGRAM_TOKEN)
 dispatcher = updater.dispatcher
-bot.sendMessage(ADMIN_CHAT_ID, text='Bot started.');
 logging.info('Bot started')
+if ADMIN_CHAT_ID:
+    bot.sendMessage(ADMIN_CHAT_ID, text='Bot started.')
 
 # Add telegram handlers
 start_handler = CommandHandler('start', start)
@@ -90,5 +91,6 @@ dispatcher.add_handler(voice_handler)
 # Start polling and wait on idle state
 updater.start_polling()
 updater.idle()
-bot.sendMessage(ADMIN_CHAT_ID, text='Program aborted.');
+if ADMIN_CHAT_ID:
+    bot.sendMessage(ADMIN_CHAT_ID, text='Program aborted.');
 logging.info('Program aborted')
