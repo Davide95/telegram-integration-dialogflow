@@ -89,5 +89,5 @@ dispatcher.add_handler(inline_handler)
 updater.start_polling()
 updater.idle()
 if ADMIN_CHAT_ID:
-	bot.sendMessage(ADMIN_CHAT_ID, text='Program aborted.');
+	bot.sendMessage(ADMIN_CHAT_ID, text='Program aborted.')
 logging.info('Program aborted')
