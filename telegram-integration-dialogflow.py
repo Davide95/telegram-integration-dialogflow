@@ -37,10 +37,10 @@ def inline(bot, update):
 	reply = list()
 	reply.append(
 	    InlineQueryResultArticle(
-	        id = uuid.uuid4(),
-	        title = query.capitalize(),
-	        input_message_content = InputTextMessageContent(dialogflow_reply),
-	        description = dialogflow_reply
+	        id=uuid.uuid4(),
+	        title=query.capitalize(),
+	        input_message_content=InputTextMessageContent(dialogflow_reply),
+	        description=dialogflow_reply
 	    )
 	)
 	bot.answer_inline_query(update.inline_query.id, reply)
