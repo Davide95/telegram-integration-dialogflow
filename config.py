@@ -1,6 +1,11 @@
-# Logging configs
+#!/usr/bin/python3
+# -*- coding: utf-8 -*
+
 import logging
-logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s.', level=logging.INFO)
+
+# Logging configs
+logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s.',
+                    level=logging.INFO)
 
 # Telegram configs
 TELEGRAM_TOKEN = '';
