@@ -14,4 +14,4 @@ If you want to run the script locally, just type `python3 run.py` in your termin
 You should consider to create an init script if you want to run it on production.
 
 ## How to contribute
-Before submiting new pull requests, ensure that your code follows the PEP 8 style guide and run pylint3 to find bad practices.
+Before submitting new pull requests, ensure that your code follows the PEP 8 style guide and run pylint3 to find bad practices.
