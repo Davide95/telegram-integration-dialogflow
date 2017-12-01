@@ -4,7 +4,7 @@ A substitute for the default Telegram integration on Dialogflow that supports ad
 
 ## How to use it
 ### Configurations
-Edit the file `config.py` in order to set your bot token, the chat_id of the administrator (leave it blank if you don't want telegram notifications every time the script will be shutten down / turned up) and your Dialogflow token.
+Edit the file `config.py` in order to set your bot token, the chat_id of the administrator (leave it blank if you don't want telegram notifications every time the script will be shut down / turned up) and your Dialogflow token.
 
 You can also change the log level: consider using ` level=logging.INFO` in production and `level=logging.DEBUG` for debugging purposes.
 
