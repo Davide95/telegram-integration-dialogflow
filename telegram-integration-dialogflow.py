@@ -54,12 +54,12 @@ def dialogflow_request(request, session_id):
 
 
 def dialogflow_event_request(event, session_id):
-	request = dialogflow.event_request(apiai.events.Event(event))
+	request = DIALOGFLOW.event_request(apiai.events.Event(event))
 	return dialogflow_request(request, session_id)
 
 
 def dialogflow_text_request(query, session_id):
-	request = dialogflow.text_request()
+	request = DIALOGFLOW.text_request()
 	request.query = query
 	return dialogflow_request(request, session_id)
 
@@ -67,27 +67,27 @@ def dialogflow_text_request(query, session_id):
 logging.info('Program started')
 
 # Init dialogflow
-dialogflow = apiai.ApiAI(DIALOGFLOW_TOKEN)
+DIALOGFLOW = apiai.ApiAI(DIALOGFLOW_TOKEN)
 
 # Init telegram
-bot = telegram.Bot(TELEGRAM_TOKEN)
-updater = Updater(token=TELEGRAM_TOKEN)
-dispatcher = updater.dispatcher
+BOT = telegram.Bot(TELEGRAM_TOKEN)
+UPDATER = Updater(token=TELEGRAM_TOKEN)
+DISPATCHER = UPDATER.dispatcher
 logging.info('Bot started')
 if ADMIN_CHAT_ID:
-	bot.sendMessage(ADMIN_CHAT_ID, text='Bot started.')
+	BOT.sendMessage(ADMIN_CHAT_ID, text='Bot started.')
 
 # Add telegram handlers
-start_handler = CommandHandler('start', start)
-dispatcher.add_handler(start_handler)
-text_handler = MessageHandler(Filters.text, text)
-dispatcher.add_handler(text_handler)
-inline_handler = InlineQueryHandler(inline)
-dispatcher.add_handler(inline_handler)
+START_HANDLER = CommandHandler('start', start)
+DISPATCHER.add_handler(START_HANDLER)
+TEXT_HANDLER = MessageHandler(Filters.text, text)
+DISPATCHER.add_handler(TEXT_HANDLER)
+INLINE_HANDLER = InlineQueryHandler(inline)
+DISPATCHER.add_handler(INLINE_HANDLER)
 
 # Start polling and wait on idle state
-updater.start_polling()
-updater.idle()
+UPDATER.start_polling()
+UPDATER.idle()
 if ADMIN_CHAT_ID:
-	bot.sendMessage(ADMIN_CHAT_ID, text='Program aborted.')
+	BOT.sendMessage(ADMIN_CHAT_ID, text='Program aborted.')
 logging.info('Program aborted')
