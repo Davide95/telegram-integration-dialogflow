@@ -15,3 +15,5 @@ You should consider to create an init script if you want to run it on production
 
 ## How to contribute
 Before submitting new pull requests, ensure that your code follows the PEP 8 style guide and run pylint3 to find bad practices.
+
+It is recommented to sign every commit with your PGP key, if you have one.
