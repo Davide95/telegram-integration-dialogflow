@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*
 
+"""
+Core script of the project.
+"""
+
 import json
 import uuid
 import logging
