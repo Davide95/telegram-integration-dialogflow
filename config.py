@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*
 
+"""
+Configuration file.
+"""
+
 import logging
 
 # Logging configs
