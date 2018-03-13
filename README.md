@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Davide95/telegram-integration-dialogflow.svg?branch=master)](https://travis-ci.org/Davide95/telegram-integration-dialogflow)
+
 # telegram-integration-dialogflow
 A substitute for the default Telegram integration on Dialogflow that supports advanced features:
 * inline queries
