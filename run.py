@@ -15,7 +15,8 @@ from telegram.ext import Updater, CommandHandler, Filters, \
 import telegram
 from telegram import InlineQueryResultArticle, InputTextMessageContent
 
-from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_TOKEN
+from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_TOKEN, WIT_TOKEN
+from wit import Wit
 
 
 def start(bot, update):
@@ -80,6 +81,9 @@ DISPATCHER = UPDATER.dispatcher
 logging.info('Bot started')
 if ADMIN_CHAT_ID:
     BOT.sendMessage(ADMIN_CHAT_ID, text='Bot started.')
+
+# Init WIT.ai
+WIT = Wit(WIT_TOKEN)
 
 # Add telegram handlers
 START_HANDLER = CommandHandler('start', start)
