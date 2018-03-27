@@ -1,2 +1,2 @@
 apiai==1.2.3
-python-telegram-bot==8.1.1
+python-telegram-bot==10.0.1
