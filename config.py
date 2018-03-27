@@ -17,3 +17,6 @@ ADMIN_CHAT_ID = ''
 
 # Dialogflow configs
 DIALOGFLOW_TOKEN = ''
+
+# WIT configs
+WIT_TOKEN = ''
