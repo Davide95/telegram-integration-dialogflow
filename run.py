@@ -14,9 +14,9 @@ from telegram.ext import Updater, CommandHandler, Filters, \
     MessageHandler, InlineQueryHandler
 import telegram
 from telegram import InlineQueryResultArticle, InputTextMessageContent
+from wit import Wit
 
 from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_TOKEN, WIT_TOKEN
-from wit import Wit
 
 
 def start(bot, update):
