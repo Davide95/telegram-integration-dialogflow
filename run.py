@@ -8,8 +8,8 @@ Core script of the project.
 import json
 import uuid
 import logging
-
 import apiai
+
 from telegram.ext import Updater, CommandHandler, Filters, \
     MessageHandler, InlineQueryHandler
 import telegram
