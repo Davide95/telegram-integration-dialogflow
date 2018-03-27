@@ -5,10 +5,15 @@ A substitute for the default Telegram integration on Dialogflow that supports ad
 * inline queries
 
 ## How to use it
+### Installation
+Before running it, you need the right version of the libraries needed.
+
+You just have to run `pip install -r requirements.txt` in the project directory.
+
 ### Configurations
 Edit the file `config.py` in order to set your bot token, the chat_id of the administrator (leave it blank if you don't want telegram notifications every time the script will be shut down / turned up) and your Dialogflow token.
 
-You can also change the log level: consider using ` level=logging.INFO` in production and `level=logging.DEBUG` for debugging purposes.
+You can also change the log level: consider using `level=logging.INFO` in production and `level=logging.DEBUG` for debugging purposes.
 
 ### How to run it
 If you want to run the script locally, just type `python3 run.py` in your terminal.
