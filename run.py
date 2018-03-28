@@ -83,7 +83,8 @@ if ADMIN_CHAT_ID:
     BOT.sendMessage(ADMIN_CHAT_ID, text='Bot started.')
 
 # Init WIT.ai
-WIT = Wit(WIT_TOKEN)
+if WIT_TOKEN:
+    WIT = Wit(WIT_TOKEN)
 
 # Add telegram handlers
 START_HANDLER = CommandHandler('start', start)
