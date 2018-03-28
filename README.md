@@ -28,8 +28,8 @@ In order to set your bot you will need to pass as arguments:
 |--WIT_TOKEN        | :x:                |Define Wit Token             | `None`	         |
 |--log              | :x:                |Set logging value            | `DEBUG`         |
 
-_If you want telegram notifications every time the script will be shut down / turned up you need to set `ADMIN_CHAT_ID`.  
-You can also change the log level: consider using `INFO` in production and `DEBUG` for debugging purposes._
+If you want telegram notifications every time the script will be shut down / turned up you need to set the `ADMIN_CHAT_ID`.  
+You can also change the log level: consider using `INFO` in production and `DEBUG` for debugging purposes.
 
 ## How to contribute
 Before submitting new pull requests, ensure that your code follows the PEP 8 style guide and run pylint3 to find bad practices.
