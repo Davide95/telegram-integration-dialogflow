@@ -8,6 +8,7 @@ Core script of the project.
 import json
 import uuid
 import logging
+import tempfile
 import apiai
 
 from telegram.ext import Updater, CommandHandler, Filters, \
@@ -36,6 +37,10 @@ def text(bot, update):
 def voice(bot, update):
     chat_id = update.message.chat_id
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
+    new_file = BOT.get_file(update.message.voice.file_id)
+    file_audio_from = tempfile.mkstemp(suffix=".ogg")
+    file_audio_to = tempfile.mkstemp(suffix=".mp3")
+    new_file.download(file_audio_from[1])
     bot.send_message(chat_id=chat_id, text="test")
 
 
