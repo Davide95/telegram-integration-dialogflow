@@ -8,6 +8,8 @@ Core script of the project.
 import json
 import uuid
 import logging
+import tempfile
+import os
 import apiai
 
 from telegram.ext import Updater, CommandHandler, Filters, \
@@ -36,7 +38,8 @@ def text(bot, update):
 def voice(bot, update):
     chat_id = update.message.chat_id
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=chat_id, text="test")
+    reply = wit_voice_request(update.message.voice)
+    bot.send_message(chat_id=chat_id, text=reply)
 
 
 def inline(bot, update):
@@ -73,6 +76,26 @@ def dialogflow_text_request(query, session_id):
     request = DIALOGFLOW.text_request()
     request.query = query
     return dialogflow_request(request, session_id)
+
+
+def wit_voice_request(audio):
+    file_audio = download_and_convert(audio.file_id)
+    close_and_remove(file_audio)
+    return "test"
+
+
+def download_and_convert(file_id):
+    new_file = BOT.get_file(file_id)
+    file_audio_from = tempfile.mkstemp(suffix=".ogg")
+    file_audio_to = tempfile.mkstemp(suffix=".mp3")
+    new_file.download(file_audio_from[1])
+    close_and_remove(file_audio_from)
+    return file_audio_to
+
+
+def close_and_remove(file_audio):
+    os.close(file_audio[0])
+    os.remove(file_audio[1])
 
 
 logging.info('Program started')
