@@ -5,7 +5,6 @@
 Core script of the project.
 """
 
-
 import json
 import uuid
 import logging
