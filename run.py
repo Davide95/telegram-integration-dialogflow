@@ -33,6 +33,12 @@ def text(bot, update):
     bot.send_message(chat_id=chat_id, text=reply)
 
 
+def voice(bot, update):
+    chat_id = update.message.chat_id
+    bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
+    bot.send_message(chat_id=chat_id, text="test")
+
+
 def inline(bot, update):
     query = update.inline_query.query
     if not query:
@@ -93,6 +99,9 @@ TEXT_HANDLER = MessageHandler(Filters.text, text)
 DISPATCHER.add_handler(TEXT_HANDLER)
 INLINE_HANDLER = InlineQueryHandler(inline)
 DISPATCHER.add_handler(INLINE_HANDLER)
+if WIT_TOKEN:
+    VOICE_HANDLER = MessageHandler(Filters.voice, voice)
+    DISPATCHER.add_handler(VOICE_HANDLER)
 
 # Start polling and wait on idle state
 UPDATER.start_polling()
