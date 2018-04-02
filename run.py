@@ -10,6 +10,7 @@ import uuid
 import logging
 import tempfile
 import os
+import subprocess
 import apiai
 
 from telegram.ext import Updater, CommandHandler, Filters, \
@@ -44,6 +45,8 @@ def voice(bot, update):
     os.close(file_audio_from[0])
     os.close(file_audio_to[0])
     new_file.download(file_audio_from[1])
+    ogg_to_mp3(file_audio_from[1], file_audio_to[1])
+    os.remove(file_audio_to[1])
     bot.send_message(chat_id=chat_id, text="test")
 
 
@@ -81,6 +84,14 @@ def dialogflow_text_request(query, session_id):
     request = DIALOGFLOW.text_request()
     request.query = query
     return dialogflow_request(request, session_id)
+
+
+def ogg_to_mp3(ogg, mp3):
+    proc = subprocess.Popen(["ffmpeg", "-i", ogg,
+                             "-acodec", "libmp3lame",
+                             "-y", mp3], stderr=subprocess.PIPE)
+    logging.debug(proc.stderr.read().decode())
+    os.remove(ogg)
 
 
 logging.info('Program started')
