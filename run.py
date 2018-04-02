@@ -11,6 +11,7 @@ import logging
 import tempfile
 import os
 import subprocess
+import sys
 import apiai
 
 from telegram.ext import Updater, CommandHandler, Filters, \
@@ -89,22 +90,21 @@ def dialogflow_text_request(query, session_id):
     return dialogflow_request(request, session_id)
 
 
-def wit_voice_request(audio, session_id):
-    message = "Mi dispiace ma non sono riuscito a capire correttamente la sua domanda. "
-    message += "Può ripetere per favore."
-    with open(audio, 'rb') as voice_file:
+def wit_voice_request(audio_path, session_id):
+    message = None
+    with open(audio_path, 'rb') as voice_file:
         try:
             reply = WIT.speech(voice_file, None, {'Content-Type': 'audio/mpeg3'})
             message = dialogflow_text_request(str(reply["_text"]), session_id)
         except WitError:
-            pass
+            logging.error(sys.exc_info()[1])
     return message
 
 
-def ogg_to_mp3(ogg, mp3):
-    proc = subprocess.Popen(["ffmpeg", "-i", ogg,
+def ogg_to_mp3(ogg_path, mp3_path):
+    proc = subprocess.Popen(["ffmpeg", "-i", ogg_path,
                              "-acodec", "libmp3lame",
-                             "-y", mp3], stderr=subprocess.PIPE)
+                             "-y", mp3_path], stderr=subprocess.PIPE)
     logging.debug(proc.stderr.read().decode())
 
 
