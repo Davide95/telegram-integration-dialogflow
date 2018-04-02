@@ -18,6 +18,7 @@ from telegram.ext import Updater, CommandHandler, Filters, \
 import telegram
 from telegram import InlineQueryResultArticle, InputTextMessageContent
 from wit import Wit
+from wit.wit import WitError
 
 from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_TOKEN, WIT_TOKEN
 
@@ -47,8 +48,9 @@ def voice(bot, update):
     new_file.download(file_audio_from[1])
     ogg_to_mp3(file_audio_from[1], file_audio_to[1])
     os.remove(file_audio_from[1])
+    reply = wit_voice_request(file_audio_to[1], chat_id)
     os.remove(file_audio_to[1])
-    bot.send_message(chat_id=chat_id, text="test")
+    bot.send_message(chat_id=chat_id, text=reply)
 
 
 def inline(bot, update):
@@ -85,6 +87,18 @@ def dialogflow_text_request(query, session_id):
     request = DIALOGFLOW.text_request()
     request.query = query
     return dialogflow_request(request, session_id)
+
+
+def wit_voice_request(audio, session_id):
+    message = "Mi dispiace ma non sono riuscito a capire correttamente la sua domanda. "
+    message += "Può ripetere per favore."
+    with open(audio, 'rb') as voice_file:
+        try:
+            reply = WIT.speech(voice_file, None, {'Content-Type': 'audio/mpeg3'})
+            message = dialogflow_text_request(str(reply["_text"]), session_id)
+        except WitError:
+            pass
+    return message
 
 
 def ogg_to_mp3(ogg, mp3):
