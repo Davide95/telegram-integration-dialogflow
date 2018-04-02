@@ -8,12 +8,13 @@ A substitute for the default Telegram integration on Dialogflow that supports ad
 ### Installation
 Before running it, you need the right version of the libraries needed.
 
-You just have to run `pip install -r requirements.txt` in the project directory.
+You have to run `pip install -r requirements.txt` in the project directory.
+Also, if you want to use [wit.ai](https://www.wit.ai), you have to install [ffmpeg](https://www.ffmpeg.org/download.html)
 
 ### How to run it
 If you want to run the script locally, just type in your terminal:
 
- `python3 run.py --TELEGRAM_TOKEN [your token]  --DIALOGFLOW_TOKEN [your token] [optional arguments]` 
+ `python3 run.py --TELEGRAM_TOKEN [your token]  --DIALOGFLOW_TOKEN [your token] [optional arguments]`
 
 You should consider to create an init script if you want to run it on production.
 
@@ -22,7 +23,7 @@ In order to set your bot you will need to pass as arguments:
 
 |Argument           |Required?           |Description                  |Defaults         |
 |-------------------|:------------------:|-----------------------------|:---------------:|
-|--TELEGRAM_TOKEN   | :heavy_check_mark: |Define Telegram bot Token    | **_Mandatory_** | 
+|--TELEGRAM_TOKEN   | :heavy_check_mark: |Define Telegram bot Token    | **_Mandatory_** |
 |--DIALOGFLOW_TOKEN | :heavy_check_mark: |Define Dialogflow Token      | **_Mandatory_** |
 |--ADMIN_CHAT_ID    | :x:                |Define Telegram admin chatID | `None`	         |
 |--WIT_TOKEN        | :x:                |Define Wit Token             | `None`	         |
