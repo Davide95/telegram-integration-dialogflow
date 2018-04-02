@@ -49,8 +49,12 @@ def voice(bot, update):
     new_file.download(file_audio_from[1])
     ogg_to_mp3(file_audio_from[1], file_audio_to[1])
     os.remove(file_audio_from[1])
-    reply = wit_voice_request(file_audio_to[1], chat_id)
+    message = wit_voice_request(file_audio_to[1])
     os.remove(file_audio_to[1])
+    if message is None:
+        reply = "Non credo di aver capito, puoi richiedermelo? Grazie."
+    else:
+        reply = dialogflow_text_request(message, chat_id)
     bot.send_message(chat_id=chat_id, text=reply)
 
 
@@ -90,12 +94,12 @@ def dialogflow_text_request(query, session_id):
     return dialogflow_request(request, session_id)
 
 
-def wit_voice_request(audio_path, session_id):
+def wit_voice_request(audio_path):
     message = None
     with open(audio_path, 'rb') as voice_file:
         try:
             reply = WIT.speech(voice_file, None, {'Content-Type': 'audio/mpeg3'})
-            message = dialogflow_text_request(str(reply["_text"]), session_id)
+            message = str(reply["_text"])
         except WitError:
             logging.error(sys.exc_info()[1])
     return message
