@@ -46,6 +46,7 @@ def voice(bot, update):
     os.close(file_audio_to[0])
     new_file.download(file_audio_from[1])
     ogg_to_mp3(file_audio_from[1], file_audio_to[1])
+    os.remove(file_audio_from[1])
     os.remove(file_audio_to[1])
     bot.send_message(chat_id=chat_id, text="test")
 
@@ -91,7 +92,6 @@ def ogg_to_mp3(ogg, mp3):
                              "-acodec", "libmp3lame",
                              "-y", mp3], stderr=subprocess.PIPE)
     logging.debug(proc.stderr.read().decode())
-    os.remove(ogg)
 
 
 logging.info('Program started')
