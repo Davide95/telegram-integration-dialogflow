@@ -2,14 +2,16 @@
 
 # telegram-integration-dialogflow
 A substitute for the default Telegram integration on Dialogflow that supports advanced features:
-* inline queries
+* inline queries;
+* incoming voice messages;
 
 ## How to use it
 ### Installation
 Before running it, you need the right version of the libraries needed.
 
 You have to run `pip install -r requirements.txt` in the project directory.
-Also, if you want to use [wit.ai](https://www.wit.ai), you have to install [ffmpeg](https://www.ffmpeg.org/download.html)
+
+Also, if you want to use wit.ai, you have to install [ffmpeg](https://www.ffmpeg.org/download.html) with `libmp3lame` codecs.
 
 ### How to run it
 If you want to run the script locally, just type in your terminal:
