@@ -122,8 +122,8 @@ BOT = telegram.Bot(TELEGRAM_TOKEN)
 UPDATER = Updater(token=TELEGRAM_TOKEN)
 DISPATCHER = UPDATER.dispatcher
 logging.info('Bot started')
-if ADMIN_CHAT_ID:
-    BOT.sendMessage(ADMIN_CHAT_ID, text='Bot started.')
+for admin_id in ADMIN_CHAT_ID:
+    BOT.sendMessage(admin_id, text='Bot started.')
 
 # Init WIT.ai
 if WIT_TOKEN:
@@ -143,6 +143,6 @@ if WIT_TOKEN:
 # Start polling and wait on idle state
 UPDATER.start_polling()
 UPDATER.idle()
-if ADMIN_CHAT_ID:
-    BOT.sendMessage(ADMIN_CHAT_ID, text='Program aborted.')
+for admin_id in ADMIN_CHAT_ID:
+    BOT.sendMessage(admin_id, text='Program aborted.')
 logging.info('Program aborted')
