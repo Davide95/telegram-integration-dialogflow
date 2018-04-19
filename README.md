@@ -27,11 +27,12 @@ In order to set your bot you will need to pass as arguments:
 |-------------------|:------------------:|-----------------------------|:---------------:|
 |--TELEGRAM_TOKEN   | :heavy_check_mark: |Define Telegram bot Token    | **_Mandatory_** |
 |--DIALOGFLOW_TOKEN | :heavy_check_mark: |Define Dialogflow Token      | **_Mandatory_** |
-|--ADMIN_CHAT_ID    | :x:                |Define Telegram admin chatID | `None`	         |
+|--ADMIN_CHAT_ID    | :x:                |Define Telegram admin chatID | `[]`	         |
 |--WIT_TOKEN        | :x:                |Define Wit Token             | `None`	         |
 |--log              | :x:                |Set logging value            | `DEBUG`         |
 
-If you want telegram notifications every time the script will be shut down / turned up you need to set the `ADMIN_CHAT_ID`.  
+If you want telegram notifications every time the script will be shut down / turned up you need to set the `ADMIN_CHAT_ID`.
+You can set the `ADMIN_CHAT_ID` with multiple arguments, for example: `--ADMIN_CHAT_ID 12345 54321`.    
 You can also change the log level: consider using `INFO` in production and `DEBUG` for debugging purposes.
 
 ## How to contribute
