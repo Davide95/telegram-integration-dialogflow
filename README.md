@@ -16,7 +16,7 @@ Also, if you want to use wit.ai for incoming voice messages, you have to install
 ### How to run it
 If you want to run the script locally, just type in your terminal:
 
- `python3 run.py --TELEGRAM_TOKEN [your token]  --DIALOGFLOW_TOKEN [your token] [optional arguments]`
+ `python3 run.py --TELEGRAM_TOKEN [your token]  --DIALOGFLOW_KEY [your key] [optional arguments]`
 
 You should consider to create an init script if you want to run it on production.
 
@@ -26,7 +26,7 @@ In order to set your bot you will need to pass as arguments:
 |Argument           |Required?           |Description                   |Defaults         |
 |-------------------|:------------------:|------------------------------|:---------------:|
 |--TELEGRAM_TOKEN   | :heavy_check_mark: |Define Telegram bot Token     | **_Mandatory_** |
-|--DIALOGFLOW_TOKEN | :heavy_check_mark: |Define Dialogflow Token       | **_Mandatory_** |
+|--DIALOGFLOW_KEY   | :heavy_check_mark: |Define Dialogflow Key Path    | **_Mandatory_** |
 |--ADMIN_CHAT_ID    | :x:                |Define Telegram admin chatIDs | `[]`	          |
 |--WIT_TOKEN        | :x:                |Define Wit Token              | `None`	        |
 |--log              | :x:                |Set logging value             | `DEBUG`         |
@@ -38,4 +38,4 @@ You can also change the log level: consider using `INFO` in production and `DEBU
 ## How to contribute
 Before submitting new pull requests, ensure that your code follows the PEP 8 style guide and run pylint3 to find bad practices.
 
-It is recommented to sign every commit with your PGP key, if you have one.
+It is recommended to sign every commit with your PGP key, if you have one.
