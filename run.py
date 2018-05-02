@@ -12,7 +12,7 @@ import tempfile
 import os
 import subprocess
 import sys
-import apiai
+import dialogflow
 
 from telegram.ext import Updater, CommandHandler, Filters, \
     MessageHandler, InlineQueryHandler
@@ -21,7 +21,7 @@ from telegram import InlineQueryResultArticle, InputTextMessageContent
 from wit import Wit
 from wit.wit import WitError
 
-from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_TOKEN, WIT_TOKEN
+from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_KEY, WIT_TOKEN
 
 
 def start(bot, update):
@@ -76,22 +76,22 @@ def inline(bot, update):
     bot.answer_inline_query(update.inline_query.id, reply)
 
 
-def dialogflow_request(request, session_id):
-    request.session_id = session_id
-    response = request.getresponse().read().decode()
-    response_json = json.loads(response, strict=False)
-    return response_json['result']['fulfillment']['messages'][0]['speech']
+def dialogflow_detect_intent(query_input, session_id):
+    session = DIALOGFLOW.session_path(PROJECT_ID, session_id)
+    response = DIALOGFLOW.detect_intent(session=session, query_input=query_input)
+    return response.query_result.fulfillment_text
 
 
 def dialogflow_event_request(event, session_id):
-    request = DIALOGFLOW.event_request(apiai.events.Event(event))
-    return dialogflow_request(request, session_id)
+    event_input = dialogflow.types.EventInput(name=event, language_code="it")
+    query_input = dialogflow.types.QueryInput(event=event_input)
+    return dialogflow_detect_intent(query_input, session_id)
 
 
 def dialogflow_text_request(query, session_id):
-    request = DIALOGFLOW.text_request()
-    request.query = query
-    return dialogflow_request(request, session_id)
+    text_input = dialogflow.types.TextInput(text=query, language_code="it")
+    query_input = dialogflow.types.QueryInput(text=text_input)
+    return dialogflow_detect_intent(query_input, session_id)
 
 
 def wit_voice_request(audio_path):
@@ -115,7 +115,13 @@ def ogg_to_mp3(ogg_path, mp3_path):
 logging.info('Program started')
 
 # Init dialogflow
-DIALOGFLOW = apiai.ApiAI(DIALOGFLOW_TOKEN)
+try:
+    PROJECT_ID = json.load(open(DIALOGFLOW_KEY))["project_id"]
+except FileNotFoundError:
+    logging.error(sys.exc_info()[1])
+    sys.exit(-1)
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = DIALOGFLOW_KEY
+DIALOGFLOW = dialogflow.SessionsClient()
 
 # Init telegram
 BOT = telegram.Bot(TELEGRAM_TOKEN)
