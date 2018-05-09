@@ -18,6 +18,7 @@ from telegram.ext import Updater, CommandHandler, Filters, \
     MessageHandler, InlineQueryHandler
 import telegram
 from telegram import InlineQueryResultArticle, InputTextMessageContent
+
 from wit import Wit
 from wit.wit import WitError
 
@@ -123,6 +124,10 @@ except FileNotFoundError:
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = DIALOGFLOW_KEY
 DIALOGFLOW = dialogflow.SessionsClient()
 
+# Init WIT.ai
+if WIT_TOKEN:
+    WIT = Wit(WIT_TOKEN)
+
 # Init telegram
 BOT = telegram.Bot(TELEGRAM_TOKEN)
 UPDATER = Updater(token=TELEGRAM_TOKEN)
@@ -130,10 +135,6 @@ DISPATCHER = UPDATER.dispatcher
 logging.info('Bot started')
 for admin_id in ADMIN_CHAT_ID:
     BOT.sendMessage(admin_id, text='Bot started.')
-
-# Init WIT.ai
-if WIT_TOKEN:
-    WIT = Wit(WIT_TOKEN)
 
 # Add telegram handlers
 START_HANDLER = CommandHandler('start', start)
