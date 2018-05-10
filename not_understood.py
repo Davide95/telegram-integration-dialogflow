@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*
 
 """
-Dictionary for default reply.
+Contains the dictionary that provides multilingual reply.
 """
 
 NOT_UNDERSTOOD = {"en": "I don't think I understand, can you ask me again? Thanks.",
