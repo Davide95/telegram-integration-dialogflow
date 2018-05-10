@@ -24,7 +24,7 @@ from wit.wit import WitError
 
 from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_KEY, WIT_TOKEN, LANGUAGE_CODE
 
-from default_reply import DEFAULT_REPLY
+from default_reply import NOT_UNDERSTOOD
 
 
 def start(bot, update):
@@ -55,7 +55,7 @@ def voice(bot, update):
     message = wit_voice_request(file_audio_to[1])
     os.remove(file_audio_to[1])
     if message is None:
-        reply = DEFAULT_REPLY[LANGUAGE_CODE]
+        reply = NOT_UNDERSTOOD[LANGUAGE_CODE]
     else:
         reply = dialogflow_text_request(message, chat_id)
     bot.send_message(chat_id=chat_id, text=reply)
