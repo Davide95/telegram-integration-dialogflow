@@ -29,6 +29,7 @@ In order to set your bot you will need to pass as arguments:
 |--DIALOGFLOW_KEY   | :heavy_check_mark: |Define Dialogflow Key Path    | **_Mandatory_** |
 |--ADMIN_CHAT_ID    | :x:                |Define Telegram admin chatIDs | `[]`	          |
 |--WIT_TOKEN        | :x:                |Define Wit Token              | `None`	        |
+|--LANGUAGE_CODE    | :x:                |Define language code          | `en`	          |
 |--log              | :x:                |Set logging value             | `DEBUG`         |
 
 If you want telegram notifications every time the script will be shut down / turned up you need to set the `ADMIN_CHAT_ID`.
