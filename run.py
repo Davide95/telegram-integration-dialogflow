@@ -23,7 +23,6 @@ from wit import Wit
 from wit.wit import WitError
 
 from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_KEY, WIT_TOKEN, LANG
-
 from lang import NOT_UNDERSTOOD
 
 
