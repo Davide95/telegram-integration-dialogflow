@@ -23,14 +23,14 @@ You should consider to create an init script if you want to run it on production
 #### Arguments
 In order to set your bot you will need to pass as arguments:
 
-|Argument           |Required?           |Description                   |Defaults         |
-|-------------------|:------------------:|------------------------------|:---------------:|
-|--TELEGRAM_TOKEN   | :heavy_check_mark: |Define Telegram bot Token     | **_Mandatory_** |
-|--DIALOGFLOW_KEY   | :heavy_check_mark: |Define Dialogflow Key Path    | **_Mandatory_** |
-|--ADMIN_CHAT_ID    | :x:                |Define Telegram admin chatIDs | `[]`	          |
-|--WIT_TOKEN        | :x:                |Define Wit Token              | `None`	        |
-|--LANG             | :x:                |Define language code          | `en`	          |
-|--log              | :x:                |Set logging value             | `DEBUG`         |
+|Argument           |Required?           |Description                   |Defaults                                  |
+|-------------------|:------------------:|------------------------------|:----------------------------------------:|
+|--TELEGRAM_TOKEN   | :heavy_check_mark: |Define Telegram bot Token     | **_Mandatory_**                          |
+|--DIALOGFLOW_KEY   | :heavy_check_mark: |Define Dialogflow Key Path    | **_Mandatory_**                          |
+|--ADMIN_CHAT_ID    | :x:                |Define Telegram admin chatIDs | `[]`	                                   |
+|--WIT_TOKEN        | :x:                |Define Wit Token              | `None`	                                 |
+|--LANG             | :x:                |Follows the [rfc1766](https://tools.ietf.org/html/rfc1766) specification.|`en`	         |
+|--log              | :x:                |Set logging value             | `DEBUG`                                  |
 
 If you want telegram notifications every time the script will be shut down / turned up you need to set the `ADMIN_CHAT_ID`.
 You can set the `ADMIN_CHAT_ID` with multiple arguments, for example: `--ADMIN_CHAT_ID 12345 54321`.    
