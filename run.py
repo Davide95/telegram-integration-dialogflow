@@ -22,7 +22,9 @@ from telegram import InlineQueryResultArticle, InputTextMessageContent
 from wit import Wit
 from wit.wit import WitError
 
-from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_KEY, WIT_TOKEN
+from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_KEY, WIT_TOKEN, LANGUAGE_CODE
+
+from default_reply import DEFAULT_REPLY
 
 
 def start(bot, update):
@@ -53,7 +55,7 @@ def voice(bot, update):
     message = wit_voice_request(file_audio_to[1])
     os.remove(file_audio_to[1])
     if message is None:
-        reply = "Non credo di aver capito, puoi richiedermelo? Grazie."
+        reply = DEFAULT_REPLY[LANGUAGE_CODE]
     else:
         reply = dialogflow_text_request(message, chat_id)
     bot.send_message(chat_id=chat_id, text=reply)
@@ -84,13 +86,13 @@ def dialogflow_detect_intent(query_input, session_id):
 
 
 def dialogflow_event_request(event, session_id):
-    event_input = dialogflow.types.EventInput(name=event, language_code="it")
+    event_input = dialogflow.types.EventInput(name=event, language_code=LANGUAGE_CODE)
     query_input = dialogflow.types.QueryInput(event=event_input)
     return dialogflow_detect_intent(query_input, session_id)
 
 
 def dialogflow_text_request(query, session_id):
-    text_input = dialogflow.types.TextInput(text=query, language_code="it")
+    text_input = dialogflow.types.TextInput(text=query, language_code=LANGUAGE_CODE)
     query_input = dialogflow.types.QueryInput(text=text_input)
     return dialogflow_detect_intent(query_input, session_id)
 
