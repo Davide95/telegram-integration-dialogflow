@@ -36,8 +36,6 @@ If you want telegram notifications every time the script will be shut down / tur
 You can set the `ADMIN_CHAT_ID` with multiple arguments, for example: `--ADMIN_CHAT_ID 12345 54321`.    
 You can also change the log level: consider using `INFO` in production and `DEBUG` for debugging purposes.
 
-Language argument, `--LANG`, follows the [rfc1766](https://tools.ietf.org/html/rfc1766) specification.
-
 ## How to contribute
 Before submitting new pull requests, ensure that your code follows the PEP 8 style guide and run pylint3 to find bad practices.
 
