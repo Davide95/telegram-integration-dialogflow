@@ -24,7 +24,7 @@ from wit.wit import WitError
 
 from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_KEY, WIT_TOKEN, LANG
 
-from not_understood import NOT_UNDERSTOOD
+from lang import NOT_UNDERSTOOD
 
 
 def start(bot, update):

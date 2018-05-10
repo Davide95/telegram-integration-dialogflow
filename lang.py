@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*
 
 """
-Contains the dictionary that provides multilingual reply.
+Contains maps which has multilingual translations.
 """
 
 NOT_UNDERSTOOD = {"en": "I don't think I understand, can you ask me again? Thanks.",
