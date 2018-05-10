@@ -15,7 +15,7 @@ OPTIONS.add_argument('--TELEGRAM_TOKEN', help='Insert Telegram Token', required=
 OPTIONS.add_argument('--ADMIN_CHAT_ID', help='Insert Telegram ChatID', nargs="*", default=[])
 OPTIONS.add_argument('--DIALOGFLOW_KEY', help='Specify Dialogflow Key Path', required=True)
 OPTIONS.add_argument('--WIT_TOKEN', help='Specify Wit Token', default='')
-OPTIONS.add_argument('--LANGUAGE_CODE', help='Specify language cod', default='en')
+OPTIONS.add_argument('--LANG', help='Specify language cod', default='en')
 OPTIONS.add_argument('--log', help='Set logging value', default='DEBUG')
 ARGUMENTS = OPTIONS.parse_args()
 
@@ -34,4 +34,4 @@ DIALOGFLOW_KEY = ARGUMENTS.DIALOGFLOW_KEY
 WIT_TOKEN = ARGUMENTS.WIT_TOKEN
 
 # Language configs
-LANGUAGE_CODE = ARGUMENTS.LANGUAGE_CODE
+LANG = ARGUMENTS.LANG

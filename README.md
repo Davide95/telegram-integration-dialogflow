@@ -29,12 +29,14 @@ In order to set your bot you will need to pass as arguments:
 |--DIALOGFLOW_KEY   | :heavy_check_mark: |Define Dialogflow Key Path    | **_Mandatory_** |
 |--ADMIN_CHAT_ID    | :x:                |Define Telegram admin chatIDs | `[]`	          |
 |--WIT_TOKEN        | :x:                |Define Wit Token              | `None`	        |
-|--LANGUAGE_CODE    | :x:                |Define language code          | `en`	          |
+|--LANG             | :x:                |Define language code          | `en`	          |
 |--log              | :x:                |Set logging value             | `DEBUG`         |
 
 If you want telegram notifications every time the script will be shut down / turned up you need to set the `ADMIN_CHAT_ID`.
 You can set the `ADMIN_CHAT_ID` with multiple arguments, for example: `--ADMIN_CHAT_ID 12345 54321`.    
 You can also change the log level: consider using `INFO` in production and `DEBUG` for debugging purposes.
+
+Language argument, `--LANG`, follows the HTTP/1.1 specification, section 3.10
 
 ## How to contribute
 Before submitting new pull requests, ensure that your code follows the PEP 8 style guide and run pylint3 to find bad practices.
