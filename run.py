@@ -138,7 +138,7 @@ for admin_id in ADMIN_CHAT_ID:
     try:
         BOT.sendMessage(admin_id, text='Bot started.')
     except telegram.error.BadRequest:
-        logging.warning('admin chat_id: ' + admin_id + ' unreachable')
+        logging.warning('Admin chat_id %s unreachable', admin_id)
 
 # Add telegram handlers
 START_HANDLER = CommandHandler('start', start)
@@ -158,5 +158,5 @@ for admin_id in ADMIN_CHAT_ID:
     try:
         BOT.sendMessage(admin_id, text='Program aborted.')
     except telegram.error.BadRequest:
-        logging.warning('admin chat_id: ' + admin_id + ' unreachable')
+        logging.warning('Admin chat_id %s unreachable', admin_id)
 logging.info('Program aborted')
