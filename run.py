@@ -103,7 +103,7 @@ def wit_voice_request(audio_path):
             reply = WIT.speech(voice_file, None, {'Content-Type': 'audio/mpeg3'})
             message = str(reply["_text"])
         except WitError:
-            logging.error(sys.exc_info()[1])
+            logging.warning(sys.exc_info()[1])
     return message
 
 
@@ -120,7 +120,7 @@ logging.info('Program started')
 try:
     PROJECT_ID = json.load(open(DIALOGFLOW_KEY))["project_id"]
 except FileNotFoundError:
-    logging.error(sys.exc_info()[1])
+    logging.fatal(sys.exc_info()[1])
     sys.exit(-1)
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = DIALOGFLOW_KEY
 DIALOGFLOW = dialogflow.SessionsClient()
@@ -135,7 +135,10 @@ UPDATER = Updater(token=TELEGRAM_TOKEN)
 DISPATCHER = UPDATER.dispatcher
 logging.info('Bot started')
 for admin_id in ADMIN_CHAT_ID:
-    BOT.sendMessage(admin_id, text='Bot started.')
+    try:
+        BOT.sendMessage(admin_id, text='Bot started.')
+    except telegram.error.BadRequest:
+        logging.warning('admin chat_id: ' + admin_id + ' unreachable')
 
 # Add telegram handlers
 START_HANDLER = CommandHandler('start', start)
@@ -152,5 +155,8 @@ if WIT_TOKEN:
 UPDATER.start_polling()
 UPDATER.idle()
 for admin_id in ADMIN_CHAT_ID:
-    BOT.sendMessage(admin_id, text='Program aborted.')
+    try:
+        BOT.sendMessage(admin_id, text='Program aborted.')
+    except telegram.error.BadRequest:
+        logging.warning('admin chat_id: ' + admin_id + ' unreachable')
 logging.info('Program aborted')
