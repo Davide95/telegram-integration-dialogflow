@@ -26,6 +26,14 @@ from config import TELEGRAM_TOKEN, ADMIN_CHAT_ID, DIALOGFLOW_KEY, WIT_TOKEN, LAN
 from lang import NOT_UNDERSTOOD
 
 
+def notify_admins(message):
+    for admin_id in ADMIN_CHAT_ID:
+        try:
+            BOT.sendMessage(admin_id, text=message)
+        except telegram.error.BadRequest:
+            logging.warning('Admin chat_id %s unreachable', admin_id)
+
+
 def start(bot, update):
     chat_id = update.message.chat_id
     bot.send_chat_action(chat_id=chat_id, action=telegram.ChatAction.TYPING)
@@ -120,7 +128,7 @@ logging.info('Program started')
 try:
     PROJECT_ID = json.load(open(DIALOGFLOW_KEY))["project_id"]
 except FileNotFoundError:
-    logging.fatal(sys.exc_info()[1])
+    logging.fatal("Unable to retrieve the PROJECT_ID of Dialogflow")
     sys.exit(-1)
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = DIALOGFLOW_KEY
 DIALOGFLOW = dialogflow.SessionsClient()
@@ -134,11 +142,7 @@ BOT = telegram.Bot(TELEGRAM_TOKEN)
 UPDATER = Updater(token=TELEGRAM_TOKEN)
 DISPATCHER = UPDATER.dispatcher
 logging.info('Bot started')
-for admin_id in ADMIN_CHAT_ID:
-    try:
-        BOT.sendMessage(admin_id, text='Bot started.')
-    except telegram.error.BadRequest:
-        logging.warning('Admin chat_id %s unreachable', admin_id)
+notify_admins('Bot started')
 
 # Add telegram handlers
 START_HANDLER = CommandHandler('start', start)
@@ -154,9 +158,5 @@ if WIT_TOKEN:
 # Start polling and wait on idle state
 UPDATER.start_polling()
 UPDATER.idle()
-for admin_id in ADMIN_CHAT_ID:
-    try:
-        BOT.sendMessage(admin_id, text='Program aborted.')
-    except telegram.error.BadRequest:
-        logging.warning('Admin chat_id %s unreachable', admin_id)
+notify_admins('Program aborted')
 logging.info('Program aborted')
