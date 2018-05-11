@@ -81,7 +81,7 @@ def inline(bot, update):
 def dialogflow_detect_intent(query_input, session_id):
     session = DIALOGFLOW.session_path(PROJECT_ID, session_id)
     response = DIALOGFLOW.detect_intent(session=session, query_input=query_input)
-    return response.query_result.fulfillment_text
+    return response.query_result.fulfillment_messages[0].text.text[0]
 
 
 def dialogflow_event_request(event, session_id):
