@@ -30,7 +30,7 @@ def notify_admins(message):
     for admin_id in ADMIN_CHAT_ID:
         try:
             BOT.sendMessage(admin_id, text=message)
-        except telegram.error.BadRequest:
+        except (telegram.error.BadRequest, telegram.error.Unauthorized):
             logging.warning('Admin chat_id %s unreachable', admin_id)
 
 
